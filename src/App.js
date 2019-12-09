@@ -11,10 +11,13 @@ import ShoppingCart from './components/ShoppingCart';
 import { ProductContext } from './contexts/ProductContext';
 import { CartContext } from './contexts/CartContext';
 
+//Hooks
+import { useLocalStorage } from './hooks/useLocalStorage';
+
 function App() {
 	const [products] = useState(data);
-	const [cart, setCart] = useState([]);
-
+	const [cart, setCart] = useLocalStorage('product', [] );
+	
 
 	const addItem = item => {
 		// add the given item to the cart
@@ -23,7 +26,7 @@ function App() {
 
 	const removeItem = id => {
 		setCart(cart.filter(item => item.id !== id ))
-	}
+	};
 
 	return (
 		<div className="App">
@@ -40,6 +43,6 @@ function App() {
 			</CartContext.Provider>
 		</div>
 	);
-}
+};
 
 export default App;
