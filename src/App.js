@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route } from 'react-router-dom';
+import { Route } from 'react-router';
 import data from './data';
 
 // Components
@@ -15,14 +15,19 @@ function App() {
 	const [products] = useState(data);
 	const [cart, setCart] = useState([]);
 
+
 	const addItem = item => {
 		// add the given item to the cart
 		setCart([...cart, item]);
 	};
 
+	const removeItem = id => {
+		setCart(cart.filter(item => item.id !== id ))
+	}
+
 	return (
 		<div className="App">
-			<CartContext.Provider value={cart}>
+			<CartContext.Provider value={{ cart, removeItem }}>
 				<ProductContext.Provider value={{ products, addItem }}>
 					<Navigation/>
 
@@ -30,7 +35,7 @@ function App() {
 					<Route exact path="/" component={Products}/>
 
 					<Route path="/cart" component={ShoppingCart}/>
-					
+
 				</ProductContext.Provider>
 			</CartContext.Provider>
 		</div>
